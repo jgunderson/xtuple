@@ -15,7 +15,8 @@ trailing:true, white:true*/
     extension: "sales",
     newActions: [
       {name: "salesHistory", label: "_salesHistory".loc(), item: "XV.SalesHistoryTimeSeriesChart"},
-      {name: "bookings", label: "_bookings".loc(), item: "XV.SalesOrderTimeSeriesChart"}
+      {name: "bookings", label: "_bookings".loc(), item: "XV.SalesOrderTimeSeriesChart"},
+      {name: "shipments", label: "_shipments".loc(), item: "XV.Period12PlusPreviousTimeSeriesChart"}
     ]
   });
 

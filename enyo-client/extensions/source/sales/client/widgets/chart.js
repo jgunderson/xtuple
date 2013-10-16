@@ -60,6 +60,20 @@ filter options
     dateField: "orderDate",
     totalField: "total"
   });
+  
+  enyo.kind({
+	    name: "XV.Period12PlusPreviousTimeSeriesChart",
+	    kind: "XV.AnalyticTimeSeriesChart",
+	    collection: "XM.SalesOrderListItemCollection",
+	    chartTitle: "_bookings".loc(),
+	    groupByOptions: [
+	      { name: "" },
+	      { name: "customer" },
+	      { name: "salesRep" }
+	    ],
+	    query : "period12PlusPrevious",
+	    cube : "SODelivery"
+	  });
 
   /*
   enyo.kind({

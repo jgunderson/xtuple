@@ -55,6 +55,7 @@ strict:true, trailing:true, white:true */
     "_scheduledDate": "Scheduled Date",
     "_shipControl": "Ship Control",
     "_shipDate": "Ship Date",
+	"_shipments": "Shipments",
     "_showQuotesAfterConverted": "Show Quotes after Conversion to SO",
     "_showSaveAndAddbutton": "Show 'Save and Add to Packing List' Button on Sales Order",
     "_staleAnalysisWarning": "Free trial demo analysis data will not be updated from your live changes.",
