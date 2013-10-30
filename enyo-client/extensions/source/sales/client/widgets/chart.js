@@ -66,17 +66,14 @@ filter options
     kind: "XV.AnalyticTimeSeriesChart",
     collection: "XM.AnalyticCollection",
     chartTitle: "_shipments".loc() + " 2010",
-    groupByOptions: [
-      { name: "" },
-      { name: "customer" },
-      { name: "salesRep" }
+    measures: [
     ],
-    filterOptions: [
-      { name: "thisWeek" },
-      { name: "thisMonth" },
-      { name: "thisYear" },
-      { name: "twoYears" },
-      { name: "fiveYears" }
+    measure: "",
+    chartOptions: [
+      { name: "barChart" },
+      { name: "stackedBarChart" },
+      { name: "lineChart" },
+      { name: "areaChart" }
     ],
     query : "period12PlusPrevious",
     queryString : "WITH MEMBER [Measures].[Delivery Gross] as 'IIf(IsEmpty([Measures].[Amount, Delivery Gross]), 0.000, [Measures].[Amount, Delivery Gross])'" +
@@ -88,8 +85,17 @@ filter options
     measureCaptions : ["Shipment Amount", "Previous Year"],
     measureColors : ['#ff7f0e', '#2ca02c'],
     plotDimension : "[Delivery Date.Calendar].[Period].[MEMBER_CAPTION]",
-    chart : function () {
-        return nv.models.lineChart();
+    chart : function (type) {
+        switch (type) {
+        case "barChart":
+          return nv.models.multiBarChart();
+        case "skatterChart":
+          return nv.models.scatterChart();
+        case "lineChart":
+          return nv.models.lineChart();
+        case "areaChart":
+          return nv.models.stackedAreaChart();
+        }
       },
     cube : "SODelivery"
   });
@@ -99,17 +105,14 @@ filter options
     kind: "XV.AnalyticTimeSeriesChart",
     collection: "XM.AnalyticCollection",
     chartTitle: "_bookings".loc() + " 2010",
-    groupByOptions: [
-      { name: "" },
-      { name: "customer" },
-      { name: "salesRep" }
+    measures: [
     ],
-    filterOptions: [
-      { name: "thisWeek" },
-      { name: "thisMonth" },
-      { name: "thisYear" },
-      { name: "twoYears" },
-      { name: "fiveYears" }
+    measure: "",
+    chartOptions: [
+      { name: "barChart" },
+      { name: "stackedBarChart" },
+      { name: "lineChart" },
+      { name: "areaChart" }
     ],
     query : "period12PlusPrevious",
     queryString : "WITH MEMBER [Measures].[Order Gross] as 'IIf(IsEmpty([Measures].[Amount, Order Gross]), 0.000, [Measures].[Amount, Order Gross])'" +
@@ -121,9 +124,18 @@ filter options
     measureCaptions : ["Booking Amount", "Previous Year"],
     measureColors : ['#ff7f0e', '#2ca02c'],
     plotDimension : "[Order Date.Calendar].[Period].[MEMBER_CAPTION]",
-    chart : function () {
+    chart : function (type) {
+        switch (type) {
+        case "barChart":
+          return nv.models.multiBarChart();
+        case "skatterChart":
+          return nv.models.scatterChart();
+        case "lineChart":
           return nv.models.lineChart();
-        },
+        case "areaChart":
+          return nv.models.stackedAreaChart();
+        }
+      },
     cube : "SOOrder"
   });
 
@@ -132,17 +144,14 @@ filter options
     kind: "XV.AnalyticTimeSeriesChart",
     collection: "XM.AnalyticCollection",
     chartTitle: "Backlog 2010",
-    groupByOptions: [
-      { name: "" },
-      { name: "customer" },
-      { name: "salesRep" }
+    measures: [
     ],
-    filterOptions: [
-      { name: "thisWeek" },
-      { name: "thisMonth" },
-      { name: "thisYear" },
-      { name: "twoYears" },
-      { name: "fiveYears" }
+    measure: "",
+    chartOptions: [
+      { name: "barChart" },
+      { name: "stackedBarChart" },
+      { name: "lineChart" },
+      { name: "areaChart" }
     ],
     query : "period12PlusPrevious",
     queryString : "WITH MEMBER [Measures].[Orders Unfulfilled] as 'IIf(IsEmpty([Measures].[Balance, Orders Unfulfilled]), 0.000, [Measures].[Balance, Orders Unfulfilled])'" +
@@ -154,9 +163,18 @@ filter options
     measureCaptions : ["Backlog Amount", "Previous Year"],
     measureColors : ['#ff7f0e', '#2ca02c'],
     plotDimension : "[Fiscal Period.Fiscal Period CL].[Fiscal Period].[MEMBER_CAPTION]",
-    chart : function () {
+    chart : function (type) {
+        switch (type) {
+        case "barChart":
           return nv.models.multiBarChart();
-        },
+        case "skatterChart":
+          return nv.models.scatterChart();
+        case "lineChart":
+          return nv.models.lineChart();
+        case "areaChart":
+          return nv.models.stackedAreaChart();
+        }
+      },
     cube : "SOByPeriod"
   });
 
