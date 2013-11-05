@@ -16,9 +16,9 @@ trailing:true, white:true*/
     newActions: [
       {name: "salesHistory", label: "_salesHistory".loc(), item: "XV.SalesHistoryTimeSeriesChart"},
       {name: "bookings", label: "_bookings".loc(), item: "XV.SalesOrderTimeSeriesChart"},
-      {name: "shipments", label: "_shipments".loc(), item: "XV.Period12PlusShipmentsTimeSeriesChart"},
-      {name: "bookingso", label: "_bookings".loc(), item: "XV.Period12PlusBookingsTimeSeriesChart"},
-      {name: "backlog", label: "Backlog", item: "XV.Period12PlusBacklogTimeSeriesChart"}
+      {name: "shipments", label: "_shipmentsTrailing".loc(), item: "XV.Period12PlusShipmentsTimeSeriesChart"},
+      {name: "bookingso", label: "_bookingsTrailing".loc(), item: "XV.Period12PlusBookingsTimeSeriesChart"},
+      {name: "backlog", label: "_backlogTrailing".loc(), item: "XV.Period12PlusBacklogTimeSeriesChart"}
     ]
   });
 

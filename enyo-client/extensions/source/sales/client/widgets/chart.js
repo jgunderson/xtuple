@@ -65,31 +65,33 @@ filter options
     name: "XV.Period12PlusShipmentsTimeSeriesChart",
     kind: "XV.AnalyticTimeSeriesChart",
     collection: "XM.AnalyticCollection",
-    chartTitle: "_shipments".loc() + " 2010",
+    chartTitle: "_shipmentsTrailing".loc(),
     measures: [
     ],
     measure: "",
     chartOptions: [
       { name: "barChart" },
-      { name: "stackedBarChart" },
+      { name: "scatterChart" },
       { name: "lineChart" },
       { name: "areaChart" }
     ],
     query : "period12PlusPrevious",
-    queryString : "WITH MEMBER [Measures].[Delivery Gross] as 'IIf(IsEmpty([Measures].[Amount, Delivery Gross]), 0.000, [Measures].[Amount, Delivery Gross])'" +
-    " MEMBER Measures.[prevKPI] AS ([Measures].[Amount, Delivery Gross] , ParallelPeriod([Delivery Date.Calendar].[2010]))" +
+    queryString: "",
+    queryTemplate : "WITH MEMBER [Measures].[Delivery Gross] as 'IIf(IsEmpty([Measures].[$measure]), 0.000, [Measures].[$measure])'" +
+    " MEMBER Measures.[prevKPI] AS ([Measures].[$measure] , ParallelPeriod([Delivery Date.Calendar Months].[$year]))" +
     " MEMBER [Measures].[Delivery Gross Previous Year] AS iif(Measures.[prevKPI] = 0 or Measures.[prevKPI] = NULL or IsEmpty(Measures.[prevKPI]), 0.000, Measures.[prevKPI] )" +
     " select NON EMPTY {[Measures].[Delivery Gross], [Measures].[Delivery Gross Previous Year]} ON COLUMNS," +
-    " LastPeriods(12, [Delivery Date.Calendar].[2010].[12]) ON ROWS" +
-    " from [SODelivery]",
-    measureCaptions : ["Shipment Amount", "Previous Year"],
+    " LastPeriods(12, [Delivery Date.Calendar Months].[$year].[$month]) ON ROWS" +
+    " from [$cube]",
+    measureCaptions : ["Pick Measure Below", "Previous Year"],
     measureColors : ['#ff7f0e', '#2ca02c'],
-    plotDimension : "[Delivery Date.Calendar].[Period].[MEMBER_CAPTION]",
+    plotDimension1 : "[Delivery Date.Calendar Months].[Year].[MEMBER_CAPTION]",
+    plotDimension2 : "[Delivery Date.Calendar Months].[Month].[MEMBER_CAPTION]",
     chart : function (type) {
         switch (type) {
         case "barChart":
           return nv.models.multiBarChart();
-        case "skatterChart":
+        case "scatterChart":
           return nv.models.scatterChart();
         case "lineChart":
           return nv.models.lineChart();
@@ -97,38 +99,41 @@ filter options
           return nv.models.stackedAreaChart();
         }
       },
-    cube : "SODelivery"
+    cube : "Shipment"
   });
   
   enyo.kind({
     name: "XV.Period12PlusBookingsTimeSeriesChart",
     kind: "XV.AnalyticTimeSeriesChart",
     collection: "XM.AnalyticCollection",
-    chartTitle: "_bookings".loc() + " 2010",
+    chartTitle: "_bookingsTrailing".loc(),
     measures: [
     ],
     measure: "",
     chartOptions: [
       { name: "barChart" },
-      { name: "stackedBarChart" },
+      { name: "scatterChart" },
       { name: "lineChart" },
       { name: "areaChart" }
     ],
     query : "period12PlusPrevious",
-    queryString : "WITH MEMBER [Measures].[Order Gross] as 'IIf(IsEmpty([Measures].[Amount, Order Gross]), 0.000, [Measures].[Amount, Order Gross])'" +
-      " MEMBER Measures.[prevKPI] AS ([Measures].[Amount, Order Gross] , ParallelPeriod([Order Date.Calendar].[2010]))" +
+    queryString: "",
+    queryTemplate : "WITH MEMBER [Measures].[Order Gross] as 'IIf(IsEmpty([Measures].[$measure]), 0.000, [Measures].[$measure])'" +
+      " MEMBER Measures.[prevKPI] AS ([Measures].[$measure] , ParallelPeriod([Order Date.Calendar Months].[$year]))" +
       " MEMBER [Measures].[Order Gross Previous Year] AS iif(Measures.[prevKPI] = 0 or Measures.[prevKPI] = NULL or IsEmpty(Measures.[prevKPI]), 0.000, Measures.[prevKPI] )" +
+      ' MEMBER [Measures].[End Date] AS ([Order Date.Calendar Months].CurrentMember.Properties("End Date"))' +
       " select NON EMPTY {[Measures].[Order Gross], [Measures].[Order Gross Previous Year]} ON COLUMNS," +
-      " LastPeriods(12, [Order Date.Calendar].[2010].[12]) ON ROWS" +
-      " from [SOOrder]",
-    measureCaptions : ["Booking Amount", "Previous Year"],
+      " LastPeriods(12, [Order Date.Calendar Months].[$year].[$month]) ON ROWS" +
+      " from [$cube]",
+    measureCaptions : ["Pick Measure Below", "Previous Year"],
     measureColors : ['#ff7f0e', '#2ca02c'],
-    plotDimension : "[Order Date.Calendar].[Period].[MEMBER_CAPTION]",
+    plotDimension1 : "[Order Date.Calendar Months].[Year].[MEMBER_CAPTION]",
+    plotDimension2 : "[Order Date.Calendar Months].[Month].[MEMBER_CAPTION]",
     chart : function (type) {
         switch (type) {
         case "barChart":
           return nv.models.multiBarChart();
-        case "skatterChart":
+        case "scatterChart":
           return nv.models.scatterChart();
         case "lineChart":
           return nv.models.lineChart();
@@ -136,38 +141,40 @@ filter options
           return nv.models.stackedAreaChart();
         }
       },
-    cube : "SOOrder"
+    cube : "Booking"
   });
 
   enyo.kind({
     name: "XV.Period12PlusBacklogTimeSeriesChart",
     kind: "XV.AnalyticTimeSeriesChart",
     collection: "XM.AnalyticCollection",
-    chartTitle: "Backlog 2010",
+    chartTitle: "_backlogTrailing".loc(),
     measures: [
     ],
     measure: "",
     chartOptions: [
       { name: "barChart" },
-      { name: "stackedBarChart" },
+      { name: "scatterChart" },
       { name: "lineChart" },
       { name: "areaChart" }
     ],
     query : "period12PlusPrevious",
-    queryString : "WITH MEMBER [Measures].[Orders Unfulfilled] as 'IIf(IsEmpty([Measures].[Balance, Orders Unfulfilled]), 0.000, [Measures].[Balance, Orders Unfulfilled])'" +
-      " MEMBER Measures.[prevKPI] AS ([Measures].[Balance, Orders Unfulfilled] , ParallelPeriod([Fiscal Period.Fiscal Period CL].[2010]))" +
+    queryString: "",
+    queryTemplate : "WITH MEMBER [Measures].[Orders Unfulfilled] as 'IIf(IsEmpty([Measures].[$measure]), 0.000, [Measures].[$measure])'" +
+      " MEMBER Measures.[prevKPI] AS ([Measures].[$measure] , ParallelPeriod([Fiscal Period.Fiscal Period CL].[$year]))" +
       " MEMBER [Measures].[Orders Unfulfilled Previous Year] AS iif(Measures.[prevKPI] = 0 or Measures.[prevKPI] = NULL or IsEmpty(Measures.[prevKPI]), 0.000, Measures.[prevKPI] )" +
       " select NON EMPTY {[Measures].[Orders Unfulfilled], [Measures].[Orders Unfulfilled Previous Year]} ON COLUMNS," +
-      " LastPeriods(12, [Fiscal Period.Fiscal Period CL].[2010].[12]) ON ROWS" +
-      " from [SOByPeriod]",
-    measureCaptions : ["Backlog Amount", "Previous Year"],
+      " LastPeriods(12, [Fiscal Period.Fiscal Period CL].[$year].[$month]) ON ROWS" +
+      " from [$cube]",
+    measureCaptions : ["Pick Measure Below", "Previous Year"],
     measureColors : ['#ff7f0e', '#2ca02c'],
-    plotDimension : "[Fiscal Period.Fiscal Period CL].[Fiscal Period].[MEMBER_CAPTION]",
+    plotDimension1 : "[Fiscal Period.Fiscal Period CL].[Fiscal Year].[MEMBER_CAPTION]",
+    plotDimension2 : "[Fiscal Period.Fiscal Period CL].[Fiscal Period].[MEMBER_CAPTION]",
     chart : function (type) {
         switch (type) {
         case "barChart":
           return nv.models.multiBarChart();
-        case "skatterChart":
+        case "scatterChart":
           return nv.models.scatterChart();
         case "lineChart":
           return nv.models.lineChart();
@@ -175,7 +182,7 @@ filter options
           return nv.models.stackedAreaChart();
         }
       },
-    cube : "SOByPeriod"
+    cube : "Backlog"
   });
 
   /*

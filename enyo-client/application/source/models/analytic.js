@@ -52,7 +52,6 @@ white:true*/
           {},
           {success: function (result) {
               results = result;
-              console.log("sync results: " + result);
               if (options.success) {
                 options.success(model, result, options);
               }

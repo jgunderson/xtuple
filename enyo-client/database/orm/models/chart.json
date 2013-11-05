@@ -72,6 +72,20 @@
           "type": "String",
           "column": "usrchart_groupby_option"
         }
+      },
+      {
+        "name": "measure",
+        "attr": {
+          "type": "String",
+          "column": "usrchart_measure_option"
+        }
+      },
+      {
+        "name": "chartType",
+        "attr": {
+          "type": "String",
+          "column": "usrchart_charttype_option"
+        }
       }
     ],
     "isSystem": true

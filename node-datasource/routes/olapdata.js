@@ -13,7 +13,7 @@ regexp:true, undef:true, strict:true, trailing:true, white:true */
       queryCallback = function (xmlaResponse) {
 		var obj = xmlaResponse.fetchAllAsObject();
 		obj = {data :  obj};
-        X.log("..............return: " + JSON.stringify(obj));
+        //X.log("..............return: " + JSON.stringify(obj));
 		res.writeHead(200, { 'Content-Type': 'application/json' });
         res.write(JSON.stringify(obj));
         res.end();
