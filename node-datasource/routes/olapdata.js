@@ -59,7 +59,7 @@ regexp:true, undef:true, strict:true, trailing:true, white:true */
     // encode and sign JWT with private key
     jwt = encodeJWT(JSON.stringify(header), JSON.stringify(claimSet), privKey);
     
-    X.log("query is: " + query);
+    //X.log("query is: " + query);
 
     X.olapSource.query(query, jwt, queryCallback);
   };
