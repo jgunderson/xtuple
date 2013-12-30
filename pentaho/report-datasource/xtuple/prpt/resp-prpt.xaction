@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<action-sequence> 
+  <name>test1.xaction</name>
+  <title>Send PRT to Reponse in format</title>
+  <version>1</version>
+  <logging-level>debug</logging-level>
+  <documentation> 
+    <author>Jeff Gunderson</author>  
+    <description>Send PRT to Reponse in format</description>  
+    <icon>/style/icons/jfree1.png</icon>  
+    <help/>  
+    <result-type>report</result-type> 
+  </documentation>
+
+  <inputs> 
+    <outputTypeList type="property-map-list"> 
+      <sources> 
+        <runtime>outputTypeList</runtime> 
+      </sources>  
+      <default-value type="property-map-list"> 
+        <property-map> 
+          <entry key="report-output-desc">PDF</entry>  
+          <entry key="report-output-type-id">application/pdf</entry> 
+        </property-map>  
+        <property-map> 
+          <entry key="report-output-desc">Excel</entry>  
+          <entry key="report-output-type-id">application/vnd.ms-excel</entry> 
+        </property-map>  
+        <property-map> 
+          <entry key="report-output-desc">Web Page</entry>  
+          <entry key="report-output-type-id">text/html</entry> 
+        </property-map> 
+      </default-value> 
+    </outputTypeList>  
+    <name type="string"> 
+      <sources> 
+        <request>name</request> 
+      </sources>  
+      <default-value><![CDATA[CustomerList.prpt]]></default-value> 
+    </name>  
+    <datasource type="string"> 
+      <sources> 
+        <request>datasource</request> 
+      </sources>  
+      <default-value><![CDATA[Ubuntu64]]></default-value> 
+    </datasource>  
+    <outputTarget type="string"> 
+      <sources> 
+        <request>outputTarget</request> 
+      </sources>  
+      <default-value><![CDATA[pageable/pdf]]></default-value> 
+    </outputTarget>  
+    <locale type="string"> 
+      <sources> 
+        <request>locale</request> 
+      </sources>  
+      <default-value><![CDATA[en_US]]></default-value> 
+    </locale>  
+    <org type="string"> 
+      <sources> 
+        <request>org</request> 
+      </sources>  
+      <default-value><![CDATA[dev]]></default-value> 
+    </org>  
+    <datakey type="string"> 
+      <sources> 
+        <request>datakey</request> 
+      </sources>  
+      <default-value><![CDATA[newffgnxoxyldi]]></default-value> 
+    </datakey>  
+    <format type="string"> 
+      <sources> 
+        <request>format</request> 
+      </sources>  
+      <default-value><![CDATA[application/pdf]]></default-value> 
+    </format> 
+  </inputs>
+
+  <outputs> 
+    <myReport type="content"> 
+      <destinations> 
+        <response>content</response> 
+      </destinations> 
+    </myReport> 
+  </outputs>
+
+  <resources/>
+  
+  <actions> 
+    <action-definition> 
+      <component-name>JavascriptRule</component-name>
+      <action-type>JavaScript to Build Report inputStream</action-type>
+      <action-inputs> 
+        <name type="string"/> 
+      </action-inputs>
+      <action-outputs> 
+        <reportDefinitionInputStream type="inputstream"/> 
+      </action-outputs>
+      <component-definition> 
+        <script><![CDATA[var solutionRepository = Packages.org.pentaho.platform.engine.core.system.PentahoSystem.get(Packages.org.pentaho.platform.api.repository.ISolutionRepository);
+reportDefinitionInputStream = solutionRepository.getResourceInputStream("//xtuple//prpt//" + name, false, Packages.org.pentaho.platform.api.repository.ISolutionRepository.ACTION_EXECUTE);]]></script> 
+      </component-definition> 
+    </action-definition>
+  
+    <action-definition> 
+      <component-name>SimpleReportingComponent</component-name>
+      <action-type>Generate the report using a solution path to the report definition</action-type>
+      <action-inputs> 
+        <reportDefinitionInputStream type="string"/>  
+        <datasource type="string"/>  
+        <locale type="string"/>  
+        <org type="string"/>  
+        <datakey type="string"/>  
+        <outputType type="string" mapping="format"/> 
+      </action-inputs>
+      <action-outputs> 
+        <outputstream type="content" mapping="myReport"/> 
+      </action-outputs>
+      <component-definition/> 
+    </action-definition>
+ 
+  </actions> 
+</action-sequence>
