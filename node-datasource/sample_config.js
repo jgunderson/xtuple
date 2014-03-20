@@ -26,7 +26,7 @@ newcap:true, noarg:true, regexp:true, undef:true, strict:true, trailing:true, wh
       // this is useful if there is a proxy in front of the app listening
       // on a different port
       proxyPort: null,
-      port: 8443,
+      port: 8442,
       encryptionKeyFile: "./lib/private/encryption_key.txt",
       keyFile: "./lib/private/key.pem",
       certFile: "./lib/private/server.crt",
