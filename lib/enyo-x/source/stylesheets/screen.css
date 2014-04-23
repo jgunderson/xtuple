@@ -2361,12 +2361,12 @@ body {
 }
 .selectable-chart {
   margin: 10px;
-  color: #fdfdfd;
+  color: #357ec7;
   overflow: hidden;
 }
 .selectable-chart .chart-title-bar {
   height: 32px;
-  background-color: #373737;
+  background-color: #efefef;
   -webkit-border-top-right-radius: 10px;
   -moz-border-radius-topright: 10px;
   border-top-right-radius: 10px;
@@ -2376,6 +2376,7 @@ body {
 }
 .selectable-chart .chart-title-bar .chart-title {
   padding-top: 8px;
+  color: #000000;
   text-align: center;
 }
 .selectable-chart .chart-title-bar .remove-icon {
@@ -2384,7 +2385,7 @@ body {
   right: 0;
 }
 .selectable-chart .chart-bottom {
-  background-color: #666666;
+  background-color: #ffffff;
   border: 1px solid #444444;
   border-top: none;
   -webkit-border-bottom-right-radius: 10px;
