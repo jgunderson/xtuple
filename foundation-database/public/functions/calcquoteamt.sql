@@ -30,14 +30,17 @@ BEGIN
   SELECT COALESCE(SUM(ROUND((quitem_qtyord * quitem_qty_invuomratio) *
                             (quitem_price / quitem_price_invuomratio), 2)), 0.0),
          COALESCE(SUM(ROUND((quitem_qtyord * quitem_qty_invuomratio) *
-                            quitem_unitcost, 2)), 0.0)
+                            (quitem_unitcost / quitem_price_invuomratio), 2)), 0.0)
          INTO _subtotal, _cost
   FROM quitem
   WHERE (quitem_quhead_id=pQuheadid);
 
   IF (pType IN ('T', 'X')) THEN
-    SELECT COALESCE(ROUND(SUM(taxdetail_tax), 2), 0.0) INTO _tax
-    FROM calculateTaxDetailSummary('Q', pQuheadid, 'T');
+    SELECT SUM(tax) INTO _tax
+    FROM (SELECT COALESCE(ROUND(SUM(taxdetail_tax), 2), 0.0) AS tax
+          FROM tax
+               JOIN calculateTaxDetailSummary('Q', pQuheadid, 'T')ON (taxdetail_tax_id=tax_id)
+          GROUP BY tax_id) AS data;
   END IF;
 
   IF (pType = 'T') THEN
